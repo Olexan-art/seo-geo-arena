@@ -168,6 +168,48 @@ const GROUP_DS = {
   all: "All channels"
 };
 
+// =================== DATA STATUS ===================
+// "demo" = mocked/sample data; "up" = wired to a live data source.
+// Flip values to "up" as connectors come online.
+const DATA_STATUS = {
+  seo_audit: "demo",
+  keyword_monitoring: "demo",
+  landing_page: "demo",
+  ctr_opt: "demo",
+  search_intent: "demo",
+  content_gap: "demo",
+  geo_opt: "demo",
+  ai_citation: "demo",
+  llm_visibility: "demo",
+  li_campaign: "demo",
+  b2b_audience: "demo",
+  lead_gen: "demo",
+  competitor: "demo",
+  content_gen: "demo",
+  structured: "demo",
+  local_seo: "demo"
+};
+
+function StatusBadge({ id, size = "sm" }) {
+  const status = DATA_STATUS[id] || "demo";
+  const cls = size === "sm"
+    ? "text-[9px] px-1.5 py-0.5"
+    : "text-[11px] px-2 py-0.5";
+  if (status === "up") {
+    return (
+      <span className={`inline-flex items-center gap-1 ${cls} rounded-full bg-emerald-50 text-emerald-700 font-semibold uppercase tracking-wide`}>
+        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+        up
+      </span>
+    );
+  }
+  return (
+    <span className={`inline-flex items-center ${cls} rounded-full bg-amber-50 text-amber-700 font-semibold uppercase tracking-wide`}>
+      demo
+    </span>
+  );
+}
+
 // =================== APP SHELL ===================
 export default function App() {
   const [lang, setLang] = useState("en");
@@ -245,8 +287,9 @@ export default function App() {
                             isActive ? "bg-indigo-50 text-indigo-700 font-medium" : "text-slate-700 hover:bg-slate-50"
                           }`}
                         >
-                          <Icon className="w-4 h-4" style={{ color: isActive ? "#4f46e5" : m.color }} />
-                          <span className="truncate">{t.modules[m.id]}</span>
+                          <Icon className="w-4 h-4 shrink-0" style={{ color: isActive ? "#4f46e5" : m.color }} />
+                          <span className="truncate flex-1 text-left">{t.modules[m.id]}</span>
+                          <StatusBadge id={m.id} />
                         </button>
                       );
                     })}
@@ -406,7 +449,10 @@ function HomeView({ t, setActive }) {
                     <Icon className="w-4 h-4" style={{ color: mod.color }} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm font-medium truncate">{t.modules[r.id]}</div>
+                    <div className="text-sm font-medium truncate flex items-center gap-1.5">
+                      <span className="truncate">{t.modules[r.id]}</span>
+                      <StatusBadge id={r.id} />
+                    </div>
                     <div className="text-xs text-slate-500">{r.time}</div>
                   </div>
                   <SIcon className={`w-4 h-4 ${sCol}`} />
@@ -432,7 +478,7 @@ function HomeView({ t, setActive }) {
                   <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: m.color + "15" }}>
                     <Icon className="w-4 h-4" style={{ color: m.color }} />
                   </div>
-                  <ArrowUpRight className="w-4 h-4 text-slate-300 group-hover:text-indigo-500" />
+                  <StatusBadge id={m.id} />
                 </div>
                 <div className="mt-3 text-sm font-medium">{t.modules[m.id]}</div>
                 <div className="text-xs text-slate-500 mt-0.5">{GROUP_DS[m.group]}</div>
@@ -477,7 +523,10 @@ function ModuleView({ id, t }) {
             <Icon className="w-6 h-6" style={{ color: mod.color }} />
           </div>
           <div>
-            <h1 className="text-2xl font-bold tracking-tight">{t.modules[id]}</h1>
+            <div className="flex items-center gap-2">
+              <h1 className="text-2xl font-bold tracking-tight">{t.modules[id]}</h1>
+              <StatusBadge id={id} size="md" />
+            </div>
             <div className="flex items-center gap-2 text-sm text-slate-500 mt-1">
               <Database className="w-3.5 h-3.5" /> {t.dataSource}: {GROUP_DS[mod.group]}
               <span className="text-slate-300">·</span>
