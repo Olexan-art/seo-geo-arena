@@ -1,0 +1,26 @@
+{
+  "name": "seo-geo-arena",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI-native marketing intelligence — SEO + GEO + LinkedIn in one workspace",
+  "type": "module",
+  "scripts": {
+    "dev": "echo 'Open index.html in a browser, or wire the component via Vite/Next.js per README.md'",
+    "start": "npm run dev"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "recharts": "^2.12.7",
+    "lucide-react": "^0.383.0"
+  },
+  "keywords": [
+    "seo",
+    "geo",
+    "ai",
+    "llm",
+    "search-console",
+    "linkedin-ads",
+    "marketing-intelligence"
+  ]
+}
